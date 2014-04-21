@@ -1,0 +1,14 @@
+[Unit]
+Description=Add the default gateway to the Kernel IP routing table
+After=syslog.target network.target
+
+[Service]
+Type=forking
+GuessMainPID=yes
+ExecStart=/bin/bash -c '/sbin/route add default gw $GATEWAY_IP' 
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
