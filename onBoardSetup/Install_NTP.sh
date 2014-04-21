@@ -16,7 +16,17 @@
 # Setting up time :
 # Based on http://derekmolloy.ie/automatically-setting-the-beaglebone-black-time-using-ntp/ .
 
-# Country where BeagleBone is expected to function.
+# How to add countries ?
+# - Enter in time directory.
+# - Add a directory whose name corresponds to the country tag.
+# - Enter in this directory .
+# - Add a file named 'server' and add the list of ntp servers like 'server addr.example.com' .
+# You can find lot of ntp servers on http://www.pool.ntp.org/ .
+# - Add a file named 'zone' add the path to localtime file from '/usr/share/zoneinfo/' .
+# - You can run the script with your new tag : './Install_NTP.sh "tag"'.
+
+# $1 <=> country tag
+# Check country tag
 if [ $# = 1 ]; then
     OK='0'
     for i in `ls time`; do
@@ -36,11 +46,15 @@ else
 fi
 
 h1 'Installing NTP'
+
 h2 'Getting NTP'
-apt-get install ntp -y -q
+apt-get install ntp -y -q &&
+echook "Installation of NTP completed." ||
+echofail "Installation of NTP has failed." &&
+echo 'Leaving script...' &&
+exit 1
 
 h2 "Adding time servers for $COUNTRY to ntp.conf"
-# For other time zones search on http://www.pool.ntp.org/ .
 NTP_SERVER=cat "time/$COUNTRY/server" &&
 sed -i "s;\(#server ntp.your-provider.example).*;\1\n$NTP_SERVER;g" /etc/ntp.conf
 

@@ -25,13 +25,34 @@ h1 "Installing $VER_PYTHON2"
 
 h2 "Installing $VER_PYTHON2 dependencies"
 echo 'Installing expat'
-apt-get install install expat -y -q
+apt-get install install expat -y -q &&
+echook 'Installation of expat completed.' ||
+echofail 'Installation of expat has failed.' &&
+echofail "Installation of $VER_PYTHON2 has failed." &&
+echo 'Leaving script...' &&
+exit 1
+
 echo 'Installing libffi'
-./Install_libffi.sh
+./Install_libffi.sh  ||
+echofail "Installation of $VER_PYTHON2 has failed." &&
+echo 'Leaving script...' &&
+exit 1
 
 h2 "Downloading $VER_PYTHON2 sources"
-wget --no-check-certificate --O - "$WEB_PYTHON2" | tar xJf - 1> /dev/null
-wget "$WEB_PYTHON2_PATCH"
+wget --no-check-certificate -O - "$WEB_PYTHON2" | tar xJf - 1> /dev/null &&
+echook 'Download completed.' ||
+echofail 'Download has failed.' && 
+echofail "Installation of $VER_PYTHON2 has failed." &&
+echo 'Leaving script...' &&
+exit 1
+
+h2 "Downloading $VER_PYTHON2 patch"
+wget "$WEB_PYTHON2_PATCH" &&
+echook 'Download completed.' ||
+echofail 'Download has failed.' && 
+echofail "Installation of $VER_PYTHON2 has failed." &&
+echo 'Leaving script...' &&
+exit 1
 
 h2 "Building $VER_PYTHON2"
 cd "$VER_PYTHON2/"
@@ -41,9 +62,11 @@ patch -Np1 -i ../Python-2.7.6-readline_6_3-1.patch &&
             --with-system-expat \
             --with-system-ffi   \
             --enable-unicode=ucs4 &&
-make
+make &&
 make install &&
-chmod -v 755 /usr/lib/libpython2.7.so.1.0
+chmod -v 755 /usr/lib/libpython2.7.so.1.0 &&
+echook "Installation of $VER_PYTHON2 completed." ||
+echofail "Installation of $VER_PYTHON2 has failed."
 cd ..
 
 h2 "Cleaning up..."
