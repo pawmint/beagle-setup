@@ -1,0 +1,3 @@
+[submodule "onBoardSetup/ubiGATE"]
+	path = onBoardSetup/ubiGATE
+	url = https://github.com/RomainEndelin/ubiGATE.git
