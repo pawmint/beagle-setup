@@ -92,15 +92,15 @@ until [ $OK = 1 ]; do
     # cut1 keeps all before ":" (cut2 strangely keeps the ":").
     # cut2 keeps device name. ex : "/dev/mmcblk0".
     DISK=`echo "$FDISK" | grep -e 'Dis.*mmcblk[0-9]' | cut -d ':' -f 1 | cut -d ' ' -f 3`
-    if [ "$DISK" != '' ]; then
+    if [ -z "$DISK" ]; then
+        echo "New SD card undetected."
+    else
         if [ `echo "$DISK" | wc -l` != 1 ]; then
             echo "More than one new SD card detected."
         else
             echo "New SD card detected : $DISK ."
             OK=1
         fi
-    else
-        echo "New SD card undetected."
     fi
 done
 
@@ -109,7 +109,7 @@ h2 'Unmounting micro SD card'
 # tr replace tabulation by one space.
 # cut keeps partition name. ex : "/dev/mmcblk0p1".
 PART=`echo "$FDISK" | grep -e 'mmcblk[0-9]p[0-9]' | tr -s ' ' | cut -d ' ' -f 2`
-if [ "$PART" = '' ]; then
+if [ -z "$PART" ]; then
     # Without partition, the disk is unmounted directly.
     echo "No partition found."
     echo "Unmounting $DISK ."
@@ -122,7 +122,7 @@ else
     done
 fi
 
-h2 "Burning the micro SD card"
+h2 'Burning the micro SD card'
 # Disk formatting to FAT32.
 mkfs.vfat -F 32 "$DISK" &&
 # Burning .img on SD Card.
@@ -135,7 +135,7 @@ exit 1
 
 #---------------------------------------------------------
 # Some setpoints :
-h2 "Setpoints"
+h2 'Setpoints'
 echo 'Power down the beaglebone black.'
 echo 'Plug the micro SD card'
 echo 'Hold down the USER/BOOT button and apply power.'
