@@ -59,6 +59,9 @@ if [ -f "$IMG_VER.img" ]; then
     echook 'Download completed.'
     echook 'Uncompress completed.'
 else
+	if [ -f "$IMG_VER.img.xz" ]; then
+	    rm "$IMG_VER.img.xz"
+	fi
     wget "$WEB_IMG$IMG_VER.img.xz" &&
     # Check download errors with md5.
     md5sum "$IMG_VER.img.xz" | md5sum -c
@@ -104,7 +107,15 @@ until [ $OK = 1 ]; do
             echo "More than one new SD card detected."
         else
             echo "New SD card detected : $DISK ."
-            OK=1
+            VAR=""
+			until [ "$VAR" = "y" -o "$VAR" = "n" ]; do
+				echo "The device $DISK will be burned : All data will be lost."
+				read -r -p "Does the device $DISK is the right one ? (Y/n) " VAR
+				VAR=`echo "$VAR" | tr '[:upper:]' '[:lower:]'`
+			done
+			if [ "$VAR" = "y" ]; then
+            	OK=1
+            fi
         fi
     fi
 done
@@ -146,12 +157,12 @@ fi
 #---------------------------------------------------------
 # Some setpoints :
 h2 'Setpoints'
-echo 'Power down the beaglebone black.'
-echo 'Plug the micro SD card'
-echo 'Hold down the USER/BOOT button and apply power.'
-echo 'When the flashing is complete, all 4 USRx LEDs will be lit solid.'
+read -r -p 'Power down the beaglebone black.'
+read -r -p 'Plug the micro SD card in beaglebone black.'
+read -r -p 'Hold down the USER/BOOT button and apply power (Keep hold during 6s after boot).'
+read -r -p 'When the flashing is complete, all 4 USRx LEDs will be lit solid.'
 echo ''
-echo 'Power down the beaglebone black.'
-echo 'Unplug the micro SD card'
+read -r -p 'Power down the beaglebone black.'
+read -r -p 'Unplug the micro SD card'
 #---------------------------------------------------------
 # End of File.

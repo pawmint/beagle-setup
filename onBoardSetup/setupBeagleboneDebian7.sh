@@ -26,29 +26,32 @@
 
 #---------------------------------------------------------
 # Setting up Network :
-./Install_Network.sh || exit
+./Install_Network.sh ||
+exit
 #---------------------------------------------------------
 # Updating packages :
 h1 'Updating packages'
-apt-get update -y -q || exit
+apt-get update -y -q
 #---------------------------------------------------------
 # Setting up time :
-./Install_NTP.sh 'fr' || exit
+./Install_NTP.sh 'fr'
 #---------------------------------------------------------
 # Python 2 :
-./Install_Python2.sh || exit
+./Install_Python2.sh
 #---------------------------------------------------------
 # Python 3 :
 #./Install_Python3.sh
 #---------------------------------------------------------
-# Mochad :
-./Install_Mochad.sh || exit
-#---------------------------------------------------------
 # OpenZWave :
-./Install_OpenZWave.sh || exit
+./Install_OpenZWave.sh
+#---------------------------------------------------------
+# Mochad :
+./Install_Mochad.sh ||
+exit
 #---------------------------------------------------------
 # UbiGATE :
-./Install_UbiGATE.sh || exit
+./Install_UbiGATE.sh ||
+exit
 #---------------------------------------------------------
 reboot
 #---------------------------------------------------------

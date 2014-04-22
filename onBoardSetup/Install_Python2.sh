@@ -36,7 +36,7 @@ else
 fi
 
 ./Install_libffi.sh 
-if [ $? != 1 ]; then
+if [ $? != 0 ]; then
     echofail "Installation of $VER_PYTHON2 has failed."
     echo "Leaving script $0 ..."
     exit 1
