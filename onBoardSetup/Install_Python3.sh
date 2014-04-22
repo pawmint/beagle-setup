@@ -24,23 +24,28 @@ h1 "Installing $VER_PYTHON3"
 
 h2 "Installing $VER_PYTHON3 dependencies"
 echo 'Installing expat'
-apt-get install install expat -y -q &&
-echook 'Installation of expat completed.' ||
-echofail 'Installation of expat has failed.' &&
-echofail "Installation of $VER_PYTHON3 has failed." &&
-echo 'Leaving script...' &&
-exit 1
-
+apt-get install install expat -y -q
+if [ $? = 0 ]; then
+    echook 'Installation of expat completed.'
+else
+	echofail 'Installation of expat has failed.'
+	echofail "Installation of $VER_PYTHON3 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 h2 "Downloading $VER_PYTHON3 sources"
-wget --no-check-certificate -O - "$WEB_PYTHON3" |  tar -zxf - 1> /dev/null &&
-echook 'Download completed.' ||
-echofail 'Download has failed.' && 
-echofail "Installation of $VER_PYTHON3 has failed." &&
-echo 'Leaving script...' &&
-exit 1
+wget --no-check-certificate -O - "$WEB_PYTHON3" |  tar -zxf - 1> /dev/null
+if [ $? = 0 ]; then
+    echook 'Download completed.'
+else
+	echofail 'Download has failed.'
+	echofail "Installation of $VER_PYTHON3 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 h2 "Building $VER_PYTHON3"
-cd "$VER_PYTHON3/"
+cd "$VER_PYTHON3/" &&
 CXX="/usr/bin/g++"              \
 ./configure --prefix=/usr       \
             --enable-shared     \
@@ -51,9 +56,14 @@ make &&
 make install &&
 chmod -v 755 /usr/lib/libpython3.4m.so &&
 chmod -v 755 /usr/lib/libpython3.so &&
-echook "Installation of $VER_PYTHON3 completed." ||
-echofail "Installation of $VER_PYTHON3 has failed."
 cd ..
+if [ $? = 0 ]; then
+    echook "Installation of $VER_PYTHON3 completed."
+else
+    echofail "Installation of $VER_PYTHON3 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 h2 "Cleaning up..."
 rm -r "$VER_PYTHON3" 

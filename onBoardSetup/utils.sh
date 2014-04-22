@@ -16,7 +16,7 @@ function h1 ()
     echo -e '----------------------------------------------------------'
     echo -e "$1"
     echo -e -n '\033[0m'
-    sleep 3
+    sleep 5
 }
 
 function h2 ()
@@ -24,7 +24,7 @@ function h2 ()
     echo -e '\033[34m'
     echo -e "$1"
     echo -e -n '\033[0m'
-    sleep 1
+    sleep 2
 }
 
 function echook ()

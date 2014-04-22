@@ -25,37 +25,47 @@ h1 "Installing $VER_PYTHON2"
 
 h2 "Installing $VER_PYTHON2 dependencies"
 echo 'Installing expat'
-apt-get install install expat -y -q &&
-echook 'Installation of expat completed.' ||
-echofail 'Installation of expat has failed.' &&
-echofail "Installation of $VER_PYTHON2 has failed." &&
-echo 'Leaving script...' &&
-exit 1
+apt-get install expat -y -q
+if [ $? = 0 ]; then
+    echook 'Installation of expat completed.'
+else
+	echofail 'Installation of expat has failed.'
+    echofail "Installation of $VER_PYTHON2 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
-echo 'Installing libffi'
-./Install_libffi.sh  ||
-echofail "Installation of $VER_PYTHON2 has failed." &&
-echo 'Leaving script...' &&
-exit 1
+./Install_libffi.sh 
+if [ $? != 1 ]; then
+    echofail "Installation of $VER_PYTHON2 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 h2 "Downloading $VER_PYTHON2 sources"
-wget --no-check-certificate -O - "$WEB_PYTHON2" | tar xJf - 1> /dev/null &&
-echook 'Download completed.' ||
-echofail 'Download has failed.' && 
-echofail "Installation of $VER_PYTHON2 has failed." &&
-echo 'Leaving script...' &&
-exit 1
+wget --no-check-certificate -O - "$WEB_PYTHON2" | tar xJf - 1> /dev/null
+if [ $? = 0 ]; then
+    echook 'Download completed.'
+else
+	echofail 'Download has failed.'
+    echofail "Installation of $VER_PYTHON2 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 h2 "Downloading $VER_PYTHON2 patch"
-wget "$WEB_PYTHON2_PATCH" &&
-echook 'Download completed.' ||
-echofail 'Download has failed.' && 
-echofail "Installation of $VER_PYTHON2 has failed." &&
-echo 'Leaving script...' &&
-exit 1
+wget "$WEB_PYTHON2_PATCH"
+if [ $? = 0 ]; then
+    echook 'Download completed.'
+else
+	echofail 'Download has failed.'
+    echofail "Installation of $VER_PYTHON2 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 h2 "Building $VER_PYTHON2"
-cd "$VER_PYTHON2/"
+cd "$VER_PYTHON2/" &&
 patch -Np1 -i ../Python-2.7.6-readline_6_3-1.patch &&
 ./configure --prefix=/usr       \
             --enable-shared     \
@@ -65,9 +75,15 @@ patch -Np1 -i ../Python-2.7.6-readline_6_3-1.patch &&
 make &&
 make install &&
 chmod -v 755 /usr/lib/libpython2.7.so.1.0 &&
-echook "Installation of $VER_PYTHON2 completed." ||
-echofail "Installation of $VER_PYTHON2 has failed."
 cd ..
+if [ $? = 0 ]; then
+    echook "Installation of $VER_PYTHON2 completed."
+else
+    echofail "Installation of $VER_PYTHON2 has failed."
+    echo "Leaving script $0 ..."
+    exit 1
+fi
+
 
 h2 "Cleaning up..."
 rm -r "$VER_PYTHON2"

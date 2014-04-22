@@ -23,20 +23,26 @@ VER_LIBFFI='libffi-3.0.13'
 h1 "Installing libffi"
 
 h2 "Getting $VER_LIBFFI sources"
-wget -O - "$WEB_LIBFFI" | tar -zxf - 1> /dev/null &&
-echook 'Download completed.' ||
-echofail 'Download has failed.' && 
-echofail "Installation of $VER_LIBFFI has failed." &&
-echo 'Leaving script...' &&
-exit 1
+wget -O - "$WEB_LIBFFI" | tar -zxf - 1> /dev/null
+if [ $? = 0 ]; then
+	echook 'Download completed.'
+else
+	echofail 'Download has failed.'
+	echofail "Installation of $VER_LIBFFI has failed."
+	echo "Leaving script $0 ..."
+	exit 1
+fi
 
 h2 "Getting patch for $VER_LIBFFI"
-wget "$WEB_LIBFFI_PATCH" &&
-echook 'Download completed.' ||
-echofail 'Download has failed.' && 
-echofail "Installation of $VER_LIBFFI has failed." &&
-echo 'Leaving script...' &&
-exit 1
+wget "$WEB_LIBFFI_PATCH"
+if [ $? = 0 ]; then
+	echook 'Download completed.'
+else
+	echofail 'Download has failed.'
+	echofail "Installation of $VER_LIBFFI has failed."
+	echo "Leaving script $0 ..."
+	exit 1
+fi
 
 h2 "Building libffi"
 cd "$VER_LIBFFI"
@@ -46,9 +52,15 @@ patch -Np1 -i ../libffi-3.0.13-includedir-1.patch &&
 			--disable-static &&
 make &&
 make install &&
-echook "Installation of $VER_LIBFFI completed." ||
-echofail "Installation of $VER_LIBFFI has failed."
 cd ..
+if [ $? = 0 ]; then
+	echook 'Download completed.'
+else
+	echofail "Installation of $VER_LIBFFI completed."
+	echofail "Installation of $VER_LIBFFI has failed."
+	echo "Leaving script $0 ..."
+	exit 1
+fi
 
 h2 "Cleaning up"
 rm -r "$VER_LIBFFI"

@@ -51,8 +51,7 @@ WEB_IMG='http://debian.beagleboard.org/images/'
 # File name of the firmware version to be burned.
 IMG_VER='BBB-eMMC-flasher-debian-7.4-2014-04-14-2gb'
 
-#---------------------------------------------------------
-# Burning firmware image :
+h1 'Burning eMMC flasher of Debian 7 for Beaglebone Black on SD card.'
 
 h2 'Getting firmware image'
 # If file exist, don't download it again.
@@ -62,18 +61,24 @@ if [ -f "$IMG_VER.img" ]; then
 else
     wget "$WEB_IMG$IMG_VER.img.xz" &&
     # Check download errors with md5.
-    md5sum "$IMG_VER.img.xz" | md5sum -c &&
-    echook 'Download completed.' ||
-    echofail 'Download has failed.' &&
-    echo 'Leaving script...' &&
-    exit 1
+    md5sum "$IMG_VER.img.xz" | md5sum -c
+    if [ $? = 0 ]; then
+        echook 'Download completed.'
+    else
+        echofail 'Download has failed.'
+        echo "Leaving script $0 ..."
+        exit 1
+    fi
 
-    apt-get install xz-utils -y -q
-    unxz "$IMG_VER.img.xz" &&
-    echook 'Uncompress completed.' ||
-    echofail 'Uncompress has failed.' && 
-    echo 'Leaving script...' &&
-    exit 1
+    apt-get install xz-utils -y -q &&
+    unxz "$IMG_VER.img.xz"
+    if [ $? = 0 ]; then
+        echook 'Uncompress completed.'
+    else
+        echofail 'Uncompress has failed.'
+        echo "Leaving script $0 ..."
+        exit 1
+    fi
 fi
 
 h2 'Finding the micro SD card'
@@ -126,12 +131,17 @@ h2 'Burning the micro SD card'
 # Disk formatting to FAT32.
 mkfs.vfat -F 32 "$DISK" &&
 # Burning .img on SD Card.
-dd if="$IMG_VER.img" of="$DISK" &&
-rm "$IMG_VER.img" &&
-echook 'Burning done.' ||
-echofail 'Burning has failed.' &&
-echo 'Leaving script...' &&
-exit 1
+dd bs=4M if="$IMG_VER.img" of="$DISK" &&
+# Flushing cache.
+sync &&
+rm "$IMG_VER.img"
+if [ $? = 0 ]; then
+    echook 'Burning done.'
+else
+    echofail 'Burning has failed.'
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 #---------------------------------------------------------
 # Some setpoints :

@@ -22,26 +22,43 @@ h1 'Installing Mochad'
 
 h2 'Installing Mochad dependencies'
 echo 'Installing libusb'
-apt-get install libusb-1.0-0-dev -y
+apt-get install libusb-1.0-0-dev -y -q
+if [ $? = 0 ]; then
+	echook 'Install completed.'
+else
+	echofail 'Install has failed.'
+	echofail 'Installation of Mochad has failed.'
+	echo "Leaving script $0 ..."
+	exit 1
+fi
 
 h2 'Downloading Mochad sources'
-wget -O - "$WEB_MOCHAD" | tar xzf - &&
-echook 'Download completed.' ||
-echofail 'Download has failed.' && 
-echofail "Installation of Mochad has failed." &&
-echo 'Leaving script...' &&
-exit 1
+wget -O - "$WEB_MOCHAD" | tar xzf -
+if [ $? = 0 ]; then
+	echook 'Download completed.'
+else
+	echofail 'Install has failed.'
+	echofail 'Installation of Mochad has failed.'
+	echo "Leaving script $0 ..."
+	exit 1
+fi
 
 h2 'Building Mochad'
-cd "mochad*"
+cd mochad* &&
 ./configure &&
 make &&
 make install &&
-echook "Installation of Mochad completed." ||
-echofail "Installation of Mochad has failed."
 cd ..
+if [ $? = 0 ]; then
+	echook 'Installation of Mochad completed.'
+else
+	echofail 'Installation of Mochad has failed.'
+	echo "Leaving script $0 ..."
+	exit 1
+fi
+
 
 h2 'Cleaning up'
-rm -r "mochad*"
+rm -r mochad*
 #---------------------------------------------------------
 # End of File.

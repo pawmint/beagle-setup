@@ -28,13 +28,13 @@
 # $1 <=> country tag
 # Check country tag
 if [ $# = 1 ]; then
-    OK='0'
+    OK=0
     for i in `ls time`; do
         if [ "$1" = "$i" ]; then
-            OK='1'
+            OK=1
         fi
     done
-    if [ "$OK" = '0' ]; then
+    if [ $OK = 0 ]; then
         COUNTRY='fr'
         echo "The country tag $COUNTRY is unknow : By default, France region is applied." >&2
     else
@@ -48,18 +48,21 @@ fi
 h1 'Installing NTP'
 
 h2 'Getting NTP'
-apt-get install ntp -y -q &&
-echook "Installation of NTP completed." ||
-echofail "Installation of NTP has failed." &&
-echo 'Leaving script...' &&
-exit 1
+apt-get install ntp -y -q
+if [ $? = 0 ]; then
+    echook 'Installation of NTP completed.'
+else
+    echofail 'Installation of NTP has failed.'
+    echo "Leaving script $0 ..."
+    exit 1
+fi
 
 h2 "Adding time servers for $COUNTRY to ntp.conf"
-NTP_SERVER=cat "time/$COUNTRY/server" &&
+NTP_SERVER=`cat "time/$COUNTRY/server"` &&
 sed -i "s;\(#server ntp.your-provider.example).*;\1\n$NTP_SERVER;g" /etc/ntp.conf
 
-h2 'Adding localtime file for $COUNTRY'
-LOCALTIME_PATH=cat "time/$COUNTRY/time" &&
+h2 "Adding localtime file for $COUNTRY"
+LOCALTIME_PATH=`cat "time/$COUNTRY/zone"` &&
 rm /etc/localtime &&
 ln -s "/usr/share/zoneinfo/$LOCALTIME_PATH" /etc/localtime
 
