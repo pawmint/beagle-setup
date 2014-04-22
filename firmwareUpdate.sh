@@ -4,15 +4,17 @@
 #   update board with latest software.
 #   Based on http://beagleboard.org/Getting%20Started#step3 .
 #   
-#   @date       18/04/2014
+#   @date       22/04/2014
 #   @copyright  PAWN International
 #   @author     Hamdi Aloulou
+#   @author     Mickael Germain
 #   
 #   @todo
 #   @bug        Not tested Yet
 #   
 ##########################################################
 
+# Same functions as utils.sh, just for standalone.
 function h1 ()
 {
     echo -e '\033[36m\033[1m'
