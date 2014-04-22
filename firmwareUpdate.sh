@@ -61,7 +61,7 @@ if [ -f "$IMG_VER.img" ]; then
     echook 'Uncompress completed.'
 else
     wget "$WEB_IMG$IMG_VER.img.xz" &&
-    # Check download errors with md5
+    # Check download errors with md5.
     md5sum "$IMG_VER.img.xz" | md5sum -c &&
     echook 'Download completed.' ||
     echofail 'Download has failed.' &&
