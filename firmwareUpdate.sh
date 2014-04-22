@@ -10,7 +10,7 @@
 #   @author     Mickael Germain
 #   
 #   @todo
-#   @bug        Not tested Yet
+#   @bug        
 #   
 ##########################################################
 
