@@ -73,7 +73,6 @@ else
         exit 1
     fi
 
-    apt-get install xz-utils -y -q &&
     unxz "$IMG_VER.img.xz"
     if [ $? = 0 ]; then
         echook 'Uncompress completed.'
