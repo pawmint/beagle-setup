@@ -37,7 +37,7 @@ apt-get update -y -q
 ./Install_NTP.sh 'fr'
 #---------------------------------------------------------
 # Python 2 :
-./Install_Python2.sh
+#./Install_Python2.sh
 #---------------------------------------------------------
 # Python 3 :
 #./Install_Python3.sh
