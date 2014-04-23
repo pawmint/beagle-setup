@@ -13,7 +13,8 @@
 
 LOG="${0%.*}_`who -m | cut -d ' ' -f 1`_`date +%F-%T`.log"
 touch "$LOG"
-xterm -T 'Log file' -e tail -f -s 1 "$LOG" &
+xterm -T 'Log file' -e tail -f -s 1 "$LOG" &>/dev/null  & 
+
 h1 "Setting up Beaglebone Black remotely"
 
 h2 "Configure IP forwarding on HOST"
