@@ -42,12 +42,12 @@ apt-get update -y -q
 # Python 3 :
 #./Install_Python3.sh
 #---------------------------------------------------------
-# OpenZWave :
-./Install_OpenZWave.sh
-#---------------------------------------------------------
 # Mochad :
 ./Install_Mochad.sh ||
 exit
+#---------------------------------------------------------
+# OpenZWave :
+./Install_OpenZWave.sh
 #---------------------------------------------------------
 # UbiGATE :
 ./Install_UbiGATE.sh ||
