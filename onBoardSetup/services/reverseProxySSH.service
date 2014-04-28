@@ -1,0 +1,14 @@
+
+[Unit]
+Description=Allow connexion through reverse proxy
+After=syslog.target network.target staticRouteBuilder.service
+
+[Service]
+Type=forking
+GuessMainPID=yes
+ExecStart=/bin/bash -c '/usr/bin/ssh -R $PORT:localhost:22 -i ~/.ssh/$FIC_PRIV_KEY $PROXY_URL -Nf' 
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

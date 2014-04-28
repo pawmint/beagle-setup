@@ -36,6 +36,12 @@ apt-get update -y -q
 # Setting up time :
 ./Install_NTP.sh 'fr'
 #---------------------------------------------------------
+# Reverse Proxy :
+./Install_SSH.sh
+#---------------------------------------------------------
+# Reverse Proxy :
+./Install_ReverseProxy.sh
+#---------------------------------------------------------
 # Python 2 :
 #./Install_Python2.sh
 #---------------------------------------------------------
@@ -47,7 +53,10 @@ apt-get update -y -q
 exit
 #---------------------------------------------------------
 # OpenZWave :
-./Install_OpenZWave.sh
+#./Install_OpenZWave.sh
+#---------------------------------------------------------
+# python-openzwave :
+./Install_PythonOpenZWave.sh
 #---------------------------------------------------------
 # UbiGATE :
 ./Install_UbiGATE.sh ||
