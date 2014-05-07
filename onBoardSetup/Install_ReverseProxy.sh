@@ -7,7 +7,7 @@
 #   @author     Mickael Germain
 #
 #   @todo       
-#   @bug        Not tested yet
+#   @bug        
 #   
 ##########################################################
 
@@ -23,8 +23,9 @@ FIC_KNOWN_HOSTS='amazon.id'
 
 h1 'Installing reverse proxy'
 h2 'Setting up service'
-cp "FIC_PRIV_KEY" "~/.ssh/$FIC_PRIV_KEY" &&
-cat "FIC_KNOWN_HOSTS" >> ~/.ssh/known_hosts &&
+cp "$FIC_PRIV_KEY" ~/.ssh &&
+chmod 600 "~/.ssh/$FIC_PRIV_KEY" &&
+cat "$FIC_KNOWN_HOSTS" >> ~/.ssh/known_hosts &&
 cp services/reverseProxySSH.service /lib/systemd/system/ &&
 sed -i -e "s;\$PROXY_URL;$PROXY_URL;g" \
 	   -e "s;\$PORT;$PORT;g" \

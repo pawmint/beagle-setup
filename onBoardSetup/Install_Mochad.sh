@@ -45,6 +45,7 @@ fi
 
 h2 'Building Mochad'
 cd mochad* &&
+MOCHAD_DIR=`basename "$PWD"`
 ./configure &&
 make &&
 make install &&
@@ -59,6 +60,6 @@ fi
 
 
 h2 'Cleaning up'
-rm -r mochad*
+rm -r "$MOCHAD_DIR"
 #---------------------------------------------------------
 # End of File.

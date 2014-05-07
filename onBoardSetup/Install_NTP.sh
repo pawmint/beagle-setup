@@ -59,7 +59,7 @@ fi
 
 h2 "Adding time servers for $COUNTRY to ntp.conf"
 NTP_SERVER=`cat "time/$COUNTRY/server"` &&
-sed -i "s;\(#server ntp.your-provider.example).*;\1\n$NTP_SERVER;g" /etc/ntp.conf
+sed -i -e "s;\(#server ntp.your-provider.example).*;\1\n$NTP_SERVER;g" /etc/ntp.conf
 
 h2 "Adding localtime file for $COUNTRY"
 LOCALTIME_PATH=`cat "time/$COUNTRY/zone"` &&

@@ -8,7 +8,7 @@
 #   @author     Mickael Germain 
 #
 #   @todo       
-#   @bug        
+#   @bug        Problem with sed
 #   
 ##########################################################
 
@@ -22,7 +22,7 @@ h1 'Setting up Network'
 
 h2 'Setting up service to configure gateway at boot'
 cp services/staticRouteBuilder.service /lib/systemd/system &&
-sed -i "s;\$GATEWAY_IP;$GATEWAY_IP;g" /lib/systemd/system/staticRouteBuilder.service &&
+sed -i -e "s;\$GATEWAY_IP;$GATEWAY_IP;g" /lib/systemd/system/staticRouteBuilder.service &&
 systemctl enable staticRouteBuilder.service &&
 systemctl start staticRouteBuilder.service
 if [ $? = 0 ]; then

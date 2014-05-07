@@ -18,7 +18,6 @@
 
 h1 'SSH'
 apt-get install ssh -y -q &&
-rm ~/.ssh &&
 mkdir ~/.ssh && 
 ssh-keygen -A &&
 if [ $? = 0 ]; then

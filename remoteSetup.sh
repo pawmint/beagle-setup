@@ -41,6 +41,7 @@ else
 fi
 
 h2 "Copying data on Beaglebone black"
+ssh-keygen -R "192.168.7.2"
 scp -r onBoardSetup root@192.168.7.2:~/ 1>/dev/null 2>>"$LOG"
 if [ $? = 0 ]; then
 	echook 'Data copied successfully.'

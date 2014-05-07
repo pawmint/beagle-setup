@@ -8,7 +8,7 @@
 #   @author     Mickael Germain
 #   
 #   @todo       Allow service to be launch after mochad
-#   @bug        Logrotate add not tested yet
+#   @bug        
 #   
 ##########################################################
 
@@ -51,13 +51,14 @@ else
 fi
 
 h2 'Adding logrotate rule'
-mkdir /etc/logrotate.d/UbiGATE &&
-mkdir "$PATH_TO_LOG" &&
-cp "$FIC_LOGROTATE" "/etc/logrotate.d/UbiGATE" &&
+mkdir /etc/logrotate.d/UbiGATE 
+mkdir "$PATH_TO_LOG" 
+cp "$FIC_LOGROTATE" /etc/logrotate.d/UbiGATE &&
 sed -i -e "s;\$PATH_TO_LOG;$PATH_TO_LOG/$FIC_LOGROTATE.log;g" \
 		    "/etc/logrotate.d/UbiGATE/$FIC_LOGROTATE"
 if [ $? = 0 ]; then
 	echook 'Adding logrotate rule completed.'
+	echook 'Installation of UbiGATE completed'
 else
 	echofail 'Adding logrotate rule has failed.'
 	echofail "Installation of ubiGATE has failed."
