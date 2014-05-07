@@ -1,0 +1,1 @@
+ssh -p 5900 root@ec2-54-186-251-30.us-west-2.compute.amazonaws.com
