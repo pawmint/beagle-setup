@@ -22,6 +22,7 @@ PROVIDER='free'
 h1 'Installing internet connection through 3G dongle'
 
 h2 'Moving configuration files'
+echo 'replacedefaultroute' >> /etc/ppp/peers/wvdial &&
 cp wvdial.conf /etc &&
 cp ip-up.local ip-down.local /etc/ppp/
 if [ $? = 0 ]; then
