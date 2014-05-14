@@ -43,24 +43,9 @@ sed -i -e "s;\$PATH_TO_UBIGATE;$PATH_TO_UBIGATE;g" \
 systemctl enable ubiGATE.service
 if [ $? = 0 ]; then
 	echook 'Setting up service completed.'
-else
-	echofail 'Setting up service has failed.'
-	echofail "Installation of ubiGATE has failed."
-	echo "Leaving script $0 ..."
-	exit 1
-fi
-
-h2 'Adding logrotate rule'
-mkdir /etc/logrotate.d/UbiGATE 
-mkdir "$PATH_TO_LOG" 
-cp "$FIC_LOGROTATE" /etc/logrotate.d/UbiGATE &&
-sed -i -e "s;\$PATH_TO_LOG;$PATH_TO_LOG/$FIC_LOGROTATE.log;g" \
-		    "/etc/logrotate.d/UbiGATE/$FIC_LOGROTATE"
-if [ $? = 0 ]; then
-	echook 'Adding logrotate rule completed.'
 	echook 'Installation of UbiGATE completed'
 else
-	echofail 'Adding logrotate rule has failed.'
+	echofail 'Setting up service has failed.'
 	echofail "Installation of ubiGATE has failed."
 	echo "Leaving script $0 ..."
 	exit 1

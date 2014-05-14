@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=forking
 GuessMainPID=yes
-ExecStart=/bin/bash -c '/bin/nc localhost 1099 | tee /var/log/ubiGATE/mochadForUbiGATE.log | /usr/local/bin/ubiGATE -H "2" -s "https://idh.lirmm.fr"'
+ExecStart=/bin/bash -c '/usr/local/bin/ubiGATE -H "2" -s "https://idh.lirmm.fr"'
 Restart=on-failure
 RestartSec=5
 

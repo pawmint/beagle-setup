@@ -1,5 +1,0 @@
-$PATH_TO_LOG {
-	maxsize 1M
-	rotate 0
-	missingok
-}
