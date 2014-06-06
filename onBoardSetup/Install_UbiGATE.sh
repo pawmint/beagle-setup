@@ -24,7 +24,7 @@ FIC_LOGROTATE='mochadForUbiGATE'
 h1 "Installing UbiGATE"
 
 h2 'Getting python module httplib2'
-pip install httplib2 -q 
+pip install httplib2 virtualenv tzlocal -q
 if [ $? = 0 ]; then
 	echook 'Installation completed.'
 else
@@ -50,6 +50,14 @@ else
 	echo "Leaving script $0 ..."
 	exit 1
 fi
+
+#vitualenv ubienv
+#source ubienv/bin/activate
+#cd ubiGATE
+#python setup.py develop
+#cd ../marmitek-gw
+#cp ressources/conf.ini.default ressources/conf.ini
+#python /home/marmitek-gw/marmitek-gw.py
 
 #---------------------------------------------------------
 # End of File.
