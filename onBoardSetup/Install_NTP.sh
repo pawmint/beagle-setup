@@ -14,7 +14,7 @@
 . utils.sh
 
 # Setting up time :
-# Based on http://derekmolloy.ie/automatically-setting-the-beaglebone-black-time-using-ntp/ .
+# Based on http://deerkmolloy.ie/automatically-setting-the-beaglebone-black-time-using-ntp/ .
 
 # How to add countries ?
 # - Enter in time directory.
@@ -64,7 +64,7 @@ sed -i -e "s;\(#server ntp.your-provider.example).*;\1\n$NTP_SERVER;g" /etc/ntp.
 h2 "Adding localtime file for $COUNTRY"
 LOCALTIME_PATH=`cat "time/$COUNTRY/zone"` &&
 rm /etc/localtime &&
-ln -s "/usr/share/zoneinfo/$LOCALTIME_PATH" /etc/localtime
-
+ln -s "/usr/share/zoneinfo/$LOCALTIME_PATH" /etc/localtime &&
+echo "$LOCALTIME_PATH" > /etc/timezone
 #---------------------------------------------------------
 # End of File.
