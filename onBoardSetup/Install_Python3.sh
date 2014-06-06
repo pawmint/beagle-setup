@@ -24,7 +24,7 @@ h1 "Installing $VER_PYTHON3"
 
 h2 "Installing $VER_PYTHON3 dependencies"
 echo 'Installing expat'
-apt-get install install expat -y -q
+apt-get install expat -y -q
 if [ $? = 0 ]; then
     echook 'Installation of expat completed.'
 else
