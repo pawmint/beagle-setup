@@ -1,0 +1,54 @@
+# 1441382
+# +network
+# 1441774
+# +update
+# 1501898
+# +pbuilder
+# 1633338
+# +dh-make
+# 1633838
+# 1634646
+# 1634434
+# 
+
+
+apt-get install dh-make pbuilder -y
+
+wget -O - 'http://sourceforge.net/projects/mochad/files/mochad-0.1.16.tar.gz/' | tar xzf -
+cd mochad-0.1.16
+dh_make -s -c gpl3 -e Mickael.Germain@lirmm.fr --createorig -y
+cd debian
+rm -rf *ex *EX README*
+
+
+echo 'Source: mochad
+Section: unknown
+Priority: extra
+Maintainer: Mickael Germain <Mickael.Germain@lirmm.fr>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev, libusb-1.0-0-dev
+Standards-Version: 3.9.3
+Homepage: http://sourceforge.net/projects/mochad/
+
+Package: mochad
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: X10 gateway
+ mochad is a Linux TCP gateway daemon for the X10 CM15A RF (radio frequency) and PL (power line) controller and the CM19A RF controller.' > control
+
+gpg --gen-key
+
+#gpg: /root/.gnupg/trustdb.gpg: trustdb created
+#gpg: key C822DE51 marked as ultimately trusted
+#public and secret key created and signed.
+#
+#gpg: checking the trustdb
+#gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+#gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+#pub   2048R/C822DE51 2014-06-20
+#      Key fingerprint = B290 FB75 BAC5 3B75 D871  2FCC 3B5E 63E4 C822 DE51
+#uid                  Mickael Germain <Mickael.Germain@lirmm.fr>
+#sub   2048R/4E12FB89 2014-06-20
+
+debuild -k949B1F2B -S -sa --lintian-opts -i
+echo "COMPONENTS=\"main restricted universe multiverse\"" | sudo tee -a /root/.pbuilderrc
+pbuilder create
