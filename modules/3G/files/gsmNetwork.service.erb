@@ -1,0 +1,15 @@
+[Unit]
+Description=Start gsm network
+Before=network.target
+Wants=network.target
+BindsTo=dev-gsmmodem.device
+After=dev-gsmmodem.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c '/usr/bin/wvdial pin <%= @provider %>'
+KillMode=none
+
+[Install]
+WantedBy=multi-user.target

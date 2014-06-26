@@ -1,0 +1,11 @@
+[Unit]
+Description=Run wvdial for unlocking sim card
+After=syslog.target network.target
+
+[Service]
+Type=forking
+GuessMainPID=yes
+ExecStart=/bin/bash -c '/usr/bin/wvdial pin'
+
+[Install]
+WantedBy=multi-user.target

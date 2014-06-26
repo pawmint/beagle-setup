@@ -1,0 +1,13 @@
+[Unit]
+Description=Run wvdial for handling 3g connection
+After=3GPin.service
+
+[Service]
+Type=forking
+GuessMainPID=yes
+ExecStart=/bin/bash -c '/usr/bin/wvdial <%= @provider %>'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
