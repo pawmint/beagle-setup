@@ -1,9 +1,0 @@
- 
-node default {
-	class { 'gsm_network':
-		provider => 'free',
-	}
-
-	include mochad
-	include python::install
-}
