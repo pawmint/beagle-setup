@@ -1,5 +1,5 @@
 
-vcsrepo{"/usr/local/etc/beagle-setup":
+vcsrepo{"/usr/local/etc/puppet":
 	ensure => present,
 	provider => git,
 	source => 'git://github.com/pawmint/beagle-setup.git',
@@ -7,9 +7,9 @@ vcsrepo{"/usr/local/etc/beagle-setup":
 }
 
 cron{"puppet":
-	require => Vcsrepo["/usr/local/etc/beagle-setup"],
+	require => Vcsrepo["/usr/local/etc/puppet"],
 	ensure => present,
-	command => '/usr/bin/puppet apply --modulepath /usr/local/etc/beagle-setup/puppet/modules /usr/local/etc/beagle-setup/puppet/manifests/node.pp',
+	command => '/usr/bin/puppet apply --modulepath /usr/local/etc/puppet/modules /usr/local/etc/puppet/manifests/node.pp',
 	user => root,
-	minute => 10,
+	minute => '*/10',
 }
