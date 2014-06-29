@@ -23,7 +23,6 @@ class reverse_proxy ($url, $port) {
 	concat::fragment{'amazon_id':
 		target => '/root/.ssh/known_hosts',
 		source => 'puppet:///modules/reverse_proxy/amazon.id',
-		ensure_newline => true,
 	}
 
 	file{ '/lib/systemd/system/reverseProxySSH.service':
