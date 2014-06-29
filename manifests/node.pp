@@ -18,7 +18,7 @@ node default {
 		version => '3',
 		pip => true,
 		dev => true,
-		virualenv => true,
+		virtualenv => true,
 		gunicorn => false,
 	}
 }
