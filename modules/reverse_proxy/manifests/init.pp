@@ -25,7 +25,7 @@ class reverse_proxy ($url, $port) {
 		require => File['/root/.ssh'],
 		mode => '0600',
 		owner => root,
-		group => owner,
+		group => root,
 		notify => Service['reverseProxySSH.service'],
 	}
 
