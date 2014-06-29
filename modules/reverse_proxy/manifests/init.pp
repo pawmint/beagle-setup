@@ -4,19 +4,29 @@ class reverse_proxy ($url, $port) {
 		ensure => installed,
 	}
 
+	file { '/root/.ssh'
+		ensure => directory,
+		mode => 700,
+		owner => root,
+		group => root,
+	}
+
 	file { '/root/.ssh/amazon.pem':
-		require => Package[ssh],
+		require => [Package[ssh], File['/root/.ssh']],
 		ensure => present,
 		mode => '0600',
 		owner => root,
 		group => root,
 		source => 'puppet:///modules/reverse_proxy/amazon.pem',
+		notify => Service['reverseProxySSH.service'],
 	}
 
 	concat{ '/root/.ssh/known_hosts':
+		require => File['/root/.ssh'],
 		mode => '0600',
 		owner => root,
 		group => owner,
+		notify => Service['reverseProxySSH.service'],
 	}
 
 	concat::fragment{'amazon_id':
