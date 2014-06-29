@@ -27,7 +27,7 @@ class reverse_proxy ($url, $port) {
 	file{ '/lib/systemd/system/reverseProxySSH.service':
 		ensure => present,
 		content => template('reverse_proxy/reverseProxySSH.service.erb'),
-		notify => Service['reverseProxySSH'],
+		notify => Service['reverseProxySSH.service'],
 	}
 
 	service {'reverseProxySSH.service':
