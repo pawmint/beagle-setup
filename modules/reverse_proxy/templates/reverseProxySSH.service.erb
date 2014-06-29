@@ -1,0 +1,14 @@
+
+[Unit]
+Description=Allow connexion through reverse proxy
+After=syslog.target network.target
+
+[Service]
+Type=forking
+GuessMainPID=yes
+ExecStart=/bin/bash -c '/usr/bin/ssh -R <% @port %>:localhost:22 -i ~/.ssh/amazon.pem <% @url %> -Nf' 
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

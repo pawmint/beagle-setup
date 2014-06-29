@@ -1,20 +1,43 @@
  
-class reverse_proxy ($url) {
+class reverse_proxy ($url, $port) {
 	package { ssh :
 		ensure => installed,
 	}
 
-	package{['sphinxcontrib-blockdiag', 'sphinxcontrib-actdiag', 'sphinxcontrib-nwdiag', 'sphinxcontrib-seqdiag'] :
-		provider => pip,
-		ensure => installed,
-		alias => pyOpZWPackPip
+	file { '/root/.ssh/amazon.pem':
+		require => Package[ssh],
+		ensure => present,
+		mode => '0600',
+		owner => root,
+		group => root,
+		source => 'puppet:///modules/reverse_proxy/amazon.pem',
 	}
-	
-	puppi::netinstall { 'python_open_zwave' :
-		require => [pyOpZWPack, pyOpZWPackPip]
-		url => 'https://code.google.com/p/python-openzwave/',
-		extracted_dir => 'python-openzwave',
-		destination_dir => '/tmp',
-		postextract_command => '/tmp/python-openzwave/update.sh && compile.sh',
+
+	concat{ '/root/.ssh/known_hosts':
+		ensure => present,
+		mode => '0600',
+		owner => root,
+		group => owner,
 	}
+
+	concat::fragment{'amazon_id':
+		target => '/root/.ssh/known_hosts',
+		source => 'puppet:///modules/reverse_proxy/amazon.id',
+		ensure_newline => true,
+	}
+
+	file{ '/lib/systemd/system/reverseProxySSH.service':
+		ensure => present,
+		content => template('reverse_proxy/reverseProxySSH.service.erb'),
+		notify => Service['reverseProxySSH'],
+	}
+
+	service {'reverseProxySSH':
+		enable => true,
+		ensure => running,
+		require => File['/lib/systemd/system/reverseProxySSH.service'],
+	}
+
+
+
 }
