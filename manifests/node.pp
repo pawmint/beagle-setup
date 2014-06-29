@@ -10,7 +10,7 @@ node default {
 	include mochad
 
 	class {'reverse_proxy':
-		url => ubuntu@ec2-54-186-251-30.us-west-2.compute.amazonaws.com,
+		url => 'ubuntu@ec2-54-186-251-30.us-west-2.compute.amazonaws.com',
         port => 5900,
     }
 
