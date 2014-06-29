@@ -14,7 +14,6 @@ class reverse_proxy ($url, $port) {
 	}
 
 	concat{ '/root/.ssh/known_hosts':
-		ensure => present,
 		mode => '0600',
 		owner => root,
 		group => owner,
@@ -31,7 +30,8 @@ class reverse_proxy ($url, $port) {
 		notify => Service['reverseProxySSH'],
 	}
 
-	service {'reverseProxySSH':
+	service {'reverseProxySSH.service':
+		provider => systemd,
 		enable => true,
 		ensure => running,
 		require => File['/lib/systemd/system/reverseProxySSH.service'],
