@@ -4,7 +4,7 @@ class reverse_proxy ($url, $port) {
 		ensure => installed,
 	}
 
-	file { '/root/.ssh'
+	file { '/root/.ssh':
 		ensure => directory,
 		mode => 700,
 		owner => root,
