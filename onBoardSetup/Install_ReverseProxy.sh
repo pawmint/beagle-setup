@@ -1,14 +1,14 @@
 #!/bin/bash
 ##########################################################
 #   Install Reverse Proxy on Beaglebone Debian 7
-#   
+#
 #   @date       29/04/2014
 #   @copyright  PAWN International
 #   @author     Mickael Germain
 #
-#   @todo       
-#   @bug        
-#   
+#   @todo
+#   @bug
+#
 ##########################################################
 
 . utils.sh
@@ -17,7 +17,7 @@
 #  :
 
 PROXY_URL='ubuntu@ec2-54-186-251-30.us-west-2.compute.amazonaws.com'
-PORT='5900'
+PORT="590$1"
 FIC_PRIV_KEY='amazon.pem'
 FIC_KNOWN_HOSTS='amazon.id'
 
