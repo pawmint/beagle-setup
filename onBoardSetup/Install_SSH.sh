@@ -22,6 +22,7 @@ rm -rf /root/.ssh &&
 mkdir /root/.ssh &&
 ssh-keygen -A &&
 cp id_rsa id_rsa.pub /root/.ssh &&
+chmod 700 /root/.ssh/id_rsa &&
 ssh -o StrictHostKeyChecking=no git@github.com &&
 if [ $? = 0 ]; then
 	echook 'Installation of ssh completed.'

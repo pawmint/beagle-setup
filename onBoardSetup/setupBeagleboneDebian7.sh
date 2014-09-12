@@ -63,6 +63,9 @@ exit
 # UbiGATE :
 ./Install_marmitek.sh $house ||
 exit
+# Zigbee-gw :
+./Install_zigbee.sh $house ||
+exit
 #---------------------------------------------------------
 # 3G dongle :
 ./Install_3G.sh

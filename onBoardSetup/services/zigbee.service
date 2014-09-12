@@ -1,0 +1,13 @@
+[Unit]
+Description=Run ubigate as a Daemon
+After=syslog.target network.target
+
+[Service]
+# Type=forking
+# GuessMainPID=yes
+ExecStart=/bin/bash -c 'cd /usr/local/lib/zigbee-gw; python zigbee-gw.py'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

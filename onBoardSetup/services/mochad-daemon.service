@@ -1,7 +1,8 @@
 [Unit]
 Description=Mochad X10 Daemon
 Requires=udev.service
-After=udev.service syslog.target network.target staticRouteBuilder.service
+After=udev.service syslog.target network.target
+# staticRouteBuilder.service
 
 [Service]
 Type=forking

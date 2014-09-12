@@ -1,14 +1,14 @@
 #!/bin/bash
 ##########################################################
 #   Install mochad on Beaglebone Debian 7
-#   
+#
 #   @date       17/04/2014
 #   @copyright  PAWN International
-#   @author     Mickael Germain 
+#   @author     Mickael Germain
 #
-#   @todo       
-#   @bug        
-#   
+#   @todo
+#   @bug
+#
 ##########################################################
 
 . utils.sh
@@ -58,6 +58,10 @@ else
 	exit 1
 fi
 
+h2 'Installing mochad service'
+rm /etc/udev/rules.d/91-usb-x10-controllers.ruless
+cp services/mochad-daemon.service /lib/systemd/system/ &&
+systemctl enable mochad-daemon.service
 
 h2 'Cleaning up'
 rm -r "$MOCHAD_DIR"
