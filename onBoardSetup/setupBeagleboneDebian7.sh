@@ -26,7 +26,7 @@
 
 #---------------------------------------------------------
 # Setting up Network :
-./Install_Network.sh
+#./Install_Network.sh
 #---------------------------------------------------------
 # Updating packages :
 h1 'Updating packages'
