@@ -49,7 +49,7 @@ def matches(signal, timezone):
                               match.group('sensor2'),
                               match.group('sensor3'))
         # Next line is an ugly tweak, due to ugly sensor input
-        sensor = 'E7C300'
+        # sensor = 'E7C300'
 
         logger.info('value: "%s", sensor: "%s", date: "%s"' %
                     (match.group('value'), sensor, date.isoformat()))

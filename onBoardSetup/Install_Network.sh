@@ -1,15 +1,15 @@
 #!/bin/bash
 ##########################################################
 #   Setting up network on Beaglebone Debian 7
-#   
+#
 #   @date       17/04/2014
 #   @copyright  PAWN International
 #   @author     Hamdi Aloulou
-#   @author     Mickael Germain 
+#   @author     Mickael Germain
 #
-#   @todo       
+#   @todo
 #   @bug        Problem with sed
-#   
+#
 ##########################################################
 
 . utils.sh
