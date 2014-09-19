@@ -1,7 +1,7 @@
 #!/bin/bash
 ##########################################################
-#   Configure Wvdial and pppd for internet connection
-#	through 3G dongle
+#   Configure wpa_supplicant and /etc/network/interfaces
+#	for the wifi dongle
 #
 #   @date       17/09/2014
 #   @copyright  PAWN International
